@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Product = require("./models/product.model.js");
 const productRoute = require("./routes/product.route.js");
 const app = express();
+require("dotenv").config();
 
 // middlewares
 // allow the app to send json in request as it cannot be done directly
@@ -80,12 +81,14 @@ app.delete("/api/products/:id", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// replace password along with <>
 // mongodb+srv://freakyhell6:<password>@backend.f9nxyap.mongodb.net/?retryWrites=true&w=majority
 
 // connect to mongodb using mongoose
 mongoose
   .connect(
-    "mongodb+srv://freakyhell6:RMWplTmkHdbvtYaM@backend.f9nxyap.mongodb.net/Node-API?retryWrites=true&w=majority"
+    `mongodb+srv://freakyhell6:${process.env.MONGO_PASSWORD}@backend.f9nxyap.mongodb.net/Node-API?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("Connected to MongoDB");
